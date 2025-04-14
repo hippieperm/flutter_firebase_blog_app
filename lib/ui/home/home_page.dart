@@ -45,12 +45,32 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           margin: const EdgeInsets.only(right: 100),
+                          padding: const EdgeInsets.all(20),
                           child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('data'),
-                              Text('data'),
-                              Text('data'),
+                              Text(
+                                'data',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                'data',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                'data',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ],
                           ),
                         )
