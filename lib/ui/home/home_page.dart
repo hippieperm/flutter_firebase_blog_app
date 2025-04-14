@@ -45,6 +45,14 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           margin: const EdgeInsets.only(right: 100),
+                          child: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('data'),
+                              Text('data'),
+                              Text('data'),
+                            ],
+                          ),
                         )
                       ],
                     ),
