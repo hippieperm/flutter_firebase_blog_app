@@ -10,4 +10,16 @@ class DetailPage extends StatelessWidget {
       body: const Text('DetailPage'),
     );
   }
+
+  Widget iconButton(IconData icon, void Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 50,
+        height: 50,
+        color: Colors.transparent,
+        child: Icon(icon),
+      ),
+    );
+  }
 }
