@@ -88,4 +88,17 @@ class PostRepository {
       return false;
     }
   }
+
+  Future<bool> delete(String id) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection('posts');
+      final docRef = collectionRef.doc(id);
+      await docRef.delete();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }
