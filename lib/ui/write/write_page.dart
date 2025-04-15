@@ -24,9 +24,56 @@ class _WritePageState extends State<WritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Text('WritePage'),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Form(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            children: [
+              TextFormField(
+                controller: writeController,
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(hintText: '작성자'),
+                validator: (value) {
+                  if (value?.trim().isEmpty ?? true) {
+                    return '작성자를 입력해 주세요';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: titleController,
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(hintText: '제목'),
+                validator: (value) {
+                  if (value?.trim().isEmpty ?? true) {
+                    return '제목을 입력해 주세요';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: contentController,
+                maxLength: null,
+                // textInputAction: TextInputAction.newline,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: const InputDecoration(hintText: '내용'),
+                validator: (value) {
+                  if (value?.trim().isEmpty ?? true) {
+                    return '내용을 입력해 주세요';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
