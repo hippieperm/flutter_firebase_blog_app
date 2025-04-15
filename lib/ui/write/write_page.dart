@@ -34,6 +34,11 @@ class _WritePageState extends State<WritePage> {
             GestureDetector(
               onTap: () {
                 final result = formKey.currentState?.validate() ?? false;
+                if (result) {
+                  // TODO: 폼 데이터 저장 또는 처리
+                  print(
+                      '폼 검증 성공: ${writeController.text}, ${titleController.text}, ${contentController.text}');
+                }
               },
               child: Container(
                 width: 50,
