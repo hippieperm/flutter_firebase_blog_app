@@ -10,6 +10,7 @@ class PostRepository {
 
     for (var doc in docs) {
       print(doc.id);
+      print(doc.data());
     }
   }
 }
