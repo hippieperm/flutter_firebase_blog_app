@@ -29,8 +29,30 @@ class _WritePageState extends State<WritePage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            GestureDetector(
+              onTap: () {
+                final result = formKey.currentState?.validate() ?? false;
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: const Text(
+                  '완료',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
         body: Form(
+          key: formKey,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             children: [
@@ -74,6 +96,16 @@ class _WritePageState extends State<WritePage> {
                   },
                 ),
               ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.grey,
+                  child: const Icon(Icons.image),
+                ),
+              )
             ],
           ),
         ),
