@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_blog_app/ui/detail/detail_page.dart';
+import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,6 +9,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.edit,
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const WritePage();
+              },
+            ),
+          );
+        },
+      ),
       appBar: AppBar(
         title: const Text('BLOG'),
       ),

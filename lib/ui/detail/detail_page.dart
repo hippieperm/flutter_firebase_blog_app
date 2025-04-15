@@ -13,11 +13,19 @@ class DetailPage extends StatelessWidget {
             Icons.delete,
             () {},
           ),
-          iconButton(Icons.edit, () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const WritePage();
-            }));
-          }),
+          iconButton(
+            Icons.edit,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const WritePage();
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: ListView(
