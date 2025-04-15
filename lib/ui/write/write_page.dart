@@ -12,6 +12,8 @@ class _WritePageState extends State<WritePage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     writeController.dispose();
