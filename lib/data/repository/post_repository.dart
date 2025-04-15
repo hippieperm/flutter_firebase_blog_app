@@ -7,7 +7,6 @@ class PostRepository {
       final firestore = FirebaseFirestore.instance;
       final collectionRef = firestore.collection('posts');
       final result = await collectionRef.get();
-
       final docs = result.docs;
 
       return docs.map((doc) {
@@ -39,6 +38,48 @@ class PostRepository {
         'title': title,
         'content': content,
         'writer': writer,
+        'imageUrl': imageUrl,
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<Post?> getOne(String id) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection('posts');
+      final docRef = collectionRef.doc(id);
+      final doc = await docRef.get();
+      return Post.fromJson(
+        {
+          'id': doc.id,
+          ...doc.data()!,
+        },
+      );
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<bool> update({
+    required String id,
+    required String writer,
+    required String title,
+    required String content,
+    required String imageUrl,
+  }) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection('posts');
+      final docRef = collectionRef.doc(id);
+      await docRef.update({
+        'writer': writer,
+        'title': title,
+        'content': content,
         'imageUrl': imageUrl,
       });
       return true;
