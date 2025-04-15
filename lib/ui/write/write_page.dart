@@ -56,19 +56,23 @@ class _WritePageState extends State<WritePage> {
                   return null;
                 },
               ),
-              TextFormField(
-                controller: contentController,
-                maxLength: null,
-                // textInputAction: TextInputAction.newline,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(hintText: '내용'),
-                validator: (value) {
-                  if (value?.trim().isEmpty ?? true) {
-                    return '내용을 입력해 주세요';
-                  }
-                  return null;
-                },
+              SizedBox(
+                height: 200,
+                child: TextFormField(
+                  controller: contentController,
+                  maxLength: null,
+                  // textInputAction: TextInputAction.newline,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(hintText: '내용'),
+                  validator: (value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return '내용을 입력해 주세요';
+                    }
+                    return null;
+                  },
+                ),
               ),
             ],
           ),
