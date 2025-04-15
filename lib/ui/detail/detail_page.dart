@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
@@ -12,13 +13,15 @@ class DetailPage extends StatelessWidget {
             Icons.delete,
             () {},
           ),
-          iconButton(
-            Icons.edit,
-            () {},
-          ),
+          iconButton(Icons.edit, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const WritePage();
+            }));
+          }),
         ],
       ),
       body: ListView(
+        padding: const EdgeInsets.only(bottom: 500),
         children: [
           Image.network(
             'https://picsum.photos/200/300',
