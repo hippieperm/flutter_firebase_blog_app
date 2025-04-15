@@ -13,6 +13,14 @@ class _WritePageState extends State<WritePage> {
   TextEditingController contentController = TextEditingController();
 
   @override
+  void dispose() {
+    writeController.dispose();
+    titleController.dispose();
+    contentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
