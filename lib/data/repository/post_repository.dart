@@ -28,7 +28,7 @@ class PostRepository {
     final firestore = FirebaseFirestore.instance;
     final collectionRef = firestore.collection('posts');
     final docRef = collectionRef.doc();
-    docRef.set({
+    await docRef.set({
       'id': docRef.id,
       'title': title,
       'content': content,
