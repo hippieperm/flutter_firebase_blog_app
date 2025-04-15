@@ -25,15 +25,20 @@ class PostRepository {
     required String writer,
     required String imageUrl,
   }) async {
-    final firestore = FirebaseFirestore.instance;
-    final collectionRef = firestore.collection('posts');
-    final docRef = collectionRef.doc();
-    await docRef.set({
-      'id': docRef.id,
-      'title': title,
-      'content': content,
-      'writer': writer,
-      'imageUrl': imageUrl,
-    });
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection('posts');
+      final docRef = collectionRef.doc();
+      await docRef.set({
+        'id': docRef.id,
+        'title': title,
+        'content': content,
+        'writer': writer,
+        'imageUrl': imageUrl,
+      });
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
   }
 }
