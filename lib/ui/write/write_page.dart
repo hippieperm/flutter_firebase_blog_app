@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_blog_app/data/model/post.dart';
+import 'package:flutter_firebase_blog_app/ui/write/write_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WritePage extends StatefulWidget {
-  const WritePage({super.key});
+class WritePage extends ConsumerStatefulWidget {
+  Post? post;
+
+  WritePage({super.key, this.post});
 
   @override
-  State<WritePage> createState() => _WritePageState();
+  ConsumerState<WritePage> createState() => _WritePageState();
 }
 
-class _WritePageState extends State<WritePage> {
+class _WritePageState extends ConsumerState<WritePage> {
   TextEditingController writeController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -24,6 +29,14 @@ class _WritePageState extends State<WritePage> {
 
   @override
   Widget build(BuildContext context) {
+    final writeState = ref.watch(writeViewModelProvider(widget.post));
+
+    if (writeState.isWriting) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -32,12 +45,19 @@ class _WritePageState extends State<WritePage> {
         appBar: AppBar(
           actions: [
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 final result = formKey.currentState?.validate() ?? false;
                 if (result) {
-                  // TODO: 폼 데이터 저장 또는 처리
-                  print(
-                      '폼 검증 성공: ${writeController.text}, ${titleController.text}, ${contentController.text}');
+                  final result = await ref
+                      .read(writeViewModelProvider(widget.post).notifier)
+                      .insert(
+                        writer: writeController.text,
+                        title: titleController.text,
+                        content: contentController.text,
+                      );
+                  if (result) {
+                    Navigator.pop(context);
+                  }
                 }
               },
               child: Container(
