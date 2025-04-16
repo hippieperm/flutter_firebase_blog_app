@@ -14,6 +14,6 @@ class DetailViewModel extends AutoDisposeFamilyNotifier<Post, Post> {
 }
 
 final detailViewModelProvider =
-    AutoDisposeFamilyNotifierProvider<DetailViewModel, Post, Post>(
+    NotifierProvider.autoDispose.family<DetailViewModel, Post, Post>(
   () => DetailViewModel(),
 );
