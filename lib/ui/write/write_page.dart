@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_blog_app/data/model/post.dart';
-import 'package:flutter_firebase_blog_app/ui/write/write_view_model.dart';
+import '../../data/model/post.dart';
+import 'write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -37,6 +37,7 @@ class _WritePageState extends ConsumerState<WritePage> {
   @override
   Widget build(BuildContext context) {
     final writeState = ref.watch(writeViewModelProvider(widget.post));
+    final vm = ref.read(writeViewModelProvider(widget.post).notifier);
 
     if (writeState.isWriting) {
       return const Center(
@@ -55,13 +56,11 @@ class _WritePageState extends ConsumerState<WritePage> {
               onTap: () async {
                 final result = formKey.currentState?.validate() ?? false;
                 if (result) {
-                  final result = await ref
-                      .read(writeViewModelProvider(widget.post).notifier)
-                      .insert(
-                        writer: writeController.text,
-                        title: titleController.text,
-                        content: contentController.text,
-                      );
+                  final insertResult = await vm.insert(
+                    writer: writeController.text,
+                    title: titleController.text,
+                    content: contentController.text,
+                  );
                   if (result) {
                     Navigator.pop(context);
                   }
@@ -137,13 +136,23 @@ class _WritePageState extends ConsumerState<WritePage> {
                       source: ImageSource.gallery,
                     );
                     print(xFile);
+                    if (xFile != null) {
+                      vm.uploadImage(xFile);
+                    }
                   },
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey,
-                    child: const Icon(Icons.image),
-                  ),
+                  child: writeState.imageUrl == null
+                      ? Container(
+                          width: 100,
+                          height: 100,
+                          color: Colors.grey,
+                          child: const Icon(Icons.image),
+                        )
+                      : SizedBox(
+                          height: 100,
+                          child: Image.network(
+                            writeState.imageUrl!,
+                          ),
+                        ),
                 ),
               )
             ],
