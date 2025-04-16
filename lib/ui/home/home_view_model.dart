@@ -12,8 +12,18 @@ class HomeViewModel extends Notifier<List<Post>> {
   }
 
   Future<void> getAllPosts() async {
-    final posts = await PostRepository().getAll();
-    state = posts ?? [];
+    // final posts = await PostRepository().getAll();
+    // state = posts ?? [];
+
+    final stream = PostRepository().postListStream();
+    final streamSubscription = stream.listen((posts) {
+      state = posts;
+    });
+    // 이 뷰모델이 없어질때 넘겨준 함수 호출
+    ref.onDispose(() {
+      // 구독 취소
+      streamSubscription.cancel();
+    });
   }
 }
 
