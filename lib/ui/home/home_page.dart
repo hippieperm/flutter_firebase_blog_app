@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const DetailPage();
+              return DetailPage(post: post);
             },
           ));
         },
@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      post.createdAt.toString(),
+                      post.createdAt.toIso8601String(),
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
