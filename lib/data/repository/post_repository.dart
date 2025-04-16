@@ -102,4 +102,21 @@ class PostRepository {
       return false;
     }
   }
+
+  Stream<List<Post>> postListStream() {
+    final firestore = FirebaseFirestore.instance;
+    final collectionRef = firestore.collection('posts');
+    final stream = collectionRef.snapshots();
+
+    final newStream = stream.map((event) {
+      return event.docs.map((e) {
+        return Post.fromJson({
+          'id': e.id,
+          ...e.data(),
+        });
+      }).toList();
+    });
+
+    return newStream;
+  }
 }
