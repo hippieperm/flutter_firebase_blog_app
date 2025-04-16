@@ -1,5 +1,5 @@
-import 'package:flutter_firebase_blog_app/data/model/post.dart';
-import 'package:flutter_firebase_blog_app/data/repository/post_repository.dart';
+import '../../data/model/post.dart';
+import '../../data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DetailViewModel extends AutoDisposeFamilyNotifier<Post, Post> {
