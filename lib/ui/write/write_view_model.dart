@@ -1,18 +1,25 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_firebase_blog_app/data/model/post.dart';
 import 'package:flutter_firebase_blog_app/data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WriteState {
   bool isWriting;
+  String? imageUrl;
 
   WriteState(
     this.isWriting,
+    this.imageUrl,
   );
 }
 
 class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
   WriteState build(Post? arg) {
-    return WriteState(false);
+    return WriteState(false, null);
   }
 
   Future<bool> insert({
@@ -20,18 +27,22 @@ class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
     required String title,
     required String content,
   }) async {
+    if (state.imageUrl == null) {
+      return false;
+    }
+
     final postRepository = PostRepository();
 
-    state = WriteState(true);
+    state = WriteState(true, null);
     if (arg == null) {
       final result = await postRepository.insert(
         writer: writer,
         title: title,
         content: content,
-        imageUrl: 'https://picsum.photos/200/300',
+        imageUrl: state.imageUrl!,
       );
       await Future.delayed(Duration(milliseconds: 500));
-      state = WriteState(false);
+      state = WriteState(false, null);
       return result;
     } else {
       final result = await postRepository.update(
@@ -39,11 +50,31 @@ class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
         writer: writer,
         title: title,
         content: content,
-        imageUrl: 'https://picsum.photos/200/300',
+        imageUrl: state.imageUrl!,
       );
       await Future.delayed(Duration(milliseconds: 500));
-      state = WriteState(false);
+      state = WriteState(false, null);
       return result;
+    }
+  }
+
+  void uploadImage(XFile xFile) async {
+    try {
+      // Firebase Storage 사용법
+      // 1. FirebaseStorage 객체 가지고 오기
+      final storage = FirebaseStorage.instance;
+      // 2. 스토리지 참조 만들기
+      Reference ref = storage.ref();
+      // 3. 파일 참조 만들기
+      Reference fileRef =
+          ref.child('${DateTime.now().microsecondsSinceEpoch}_${xFile.name}');
+      // 4. 쓰기!
+      await fileRef.putFile(File(xFile.path));
+      // 5. 파일에 접근할 수 있는 URL 받기
+      String imageUrl = await fileRef.getDownloadURL();
+      state = WriteState(false, imageUrl);
+    } catch (e) {
+      print(e);
     }
   }
 }
