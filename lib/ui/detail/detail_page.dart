@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_blog_app/data/model/post.dart';
-import 'package:flutter_firebase_blog_app/ui/detail/detail_view_model.dart';
-import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
+import '../../data/model/post.dart';
+import 'detail_view_model.dart';
+import '../write/write_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DetailPage extends ConsumerWidget {
