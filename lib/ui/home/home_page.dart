@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_blog_app/data/model/post.dart';
 import 'package:flutter_firebase_blog_app/ui/detail/detail_page.dart';
 import 'package:flutter_firebase_blog_app/ui/home/home_view_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
@@ -43,7 +44,8 @@ class HomePage extends StatelessWidget {
                   child: ListView.separated(
                     itemCount: posts.length,
                     itemBuilder: (context, index) {
-                      return item();
+                      final post = posts[index];
+                      return item(post);
                     },
                     separatorBuilder: (context, index) =>
                         const SizedBox(height: 10),
@@ -57,7 +59,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget item() {
+  Widget item(Post post) {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
@@ -79,7 +81,7 @@ class HomePage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    'https://picsum.photos/200/300',
+                    post.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -93,29 +95,29 @@ class HomePage extends StatelessWidget {
                 ),
                 margin: const EdgeInsets.only(right: 100),
                 padding: const EdgeInsets.all(20),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Today I Learend',
-                      style: TextStyle(
+                      post.title,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      '플러터 그리드 뷰를 배웠습니다.플러터 그리드 뷰를 배웠습니다.플러터 그리드 뷰를 배웠습니다.',
+                      post.content,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
-                      '2024.08.18. 20:34',
-                      style: TextStyle(
+                      post.createdAt.toString(),
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
                       ),
