@@ -13,9 +13,15 @@ class WritePage extends ConsumerStatefulWidget {
 }
 
 class _WritePageState extends ConsumerState<WritePage> {
-  TextEditingController writeController = TextEditingController();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController contentController = TextEditingController();
+  late TextEditingController writeController = TextEditingController(
+    text: widget.post?.writer ?? '',
+  );
+  late TextEditingController titleController = TextEditingController(
+    text: widget.post?.title ?? '',
+  );
+  late TextEditingController contentController = TextEditingController(
+    text: widget.post?.content ?? '',
+  );
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
