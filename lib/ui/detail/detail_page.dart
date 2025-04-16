@@ -21,7 +21,14 @@ class DetailPage extends ConsumerWidget {
         actions: [
           iconButton(
             Icons.delete,
-            () {},
+            () async {
+              final result = await ref
+                  .read(detailViewModelProvider(post).notifier)
+                  .delete(post);
+              if (result) {
+                Navigator.pop(context);
+              }
+            },
           ),
           iconButton(
             Icons.edit,
@@ -30,7 +37,7 @@ class DetailPage extends ConsumerWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const WritePage();
+                    return WritePage(post: post);
                   },
                 ),
               );
