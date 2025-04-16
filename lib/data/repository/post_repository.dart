@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_firebase_blog_app/data/model/post.dart';
+import '../model/post.dart';
 
 class PostRepository {
   Future<List<Post>?> getAll() async {
