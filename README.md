@@ -36,7 +36,12 @@
 
 | 게시물 목록 | 게시물 작성 | 게시물 상세 |
 |:-----------:|:-----------:|:-----------:|
-| ![스크린샷1](screenshot1.png) | ![스크린샷2](screenshot2.png) | ![스크린샷3](screenshot3.png) |
+| ![스크린샷1](https://github.com/user-attachments/assets/ab01e006-f5fe-4deb-8882-c3c66af51a29) | ![스크린샷2](https://github.com/user-attachments/assets/aab07625-4333-4e99-b3f1-b6d80b39996a) | ![스크린샷3](https://github.com/user-attachments/assets/dba537b1-8d14-4c3d-ad06-c819133a9853) |
+
+
+
+
+
 
 ## 🔗 사용된 패키지
 
