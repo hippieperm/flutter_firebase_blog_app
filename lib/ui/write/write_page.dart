@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_blog_app/data/model/post.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WritePage extends ConsumerStatefulWidget {
   Post? post;
@@ -130,11 +131,19 @@ class _WritePageState extends ConsumerState<WritePage> {
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerRight,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.grey,
-                  child: const Icon(Icons.image),
+                child: GestureDetector(
+                  onTap: () async {
+                    final XFile? xFile = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                    );
+                    print(xFile);
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey,
+                    child: const Icon(Icons.image),
+                  ),
                 ),
               )
             ],
