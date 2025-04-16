@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_firebase_blog_app/data/model/post.dart';
-import 'package:flutter_firebase_blog_app/data/repository/post_repository.dart';
+import '../../data/model/post.dart';
+import '../../data/repository/post_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 class WriteState {
@@ -19,7 +18,7 @@ class WriteState {
 
 class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
   WriteState build(Post? arg) {
-    return WriteState(false, null);
+    return WriteState(false, arg?.imageUrl);
   }
 
   Future<bool> insert({
@@ -33,7 +32,7 @@ class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
 
     final postRepository = PostRepository();
 
-    state = WriteState(true, null);
+    state = WriteState(true, state.imageUrl);
     if (arg == null) {
       final result = await postRepository.insert(
         writer: writer,
@@ -42,7 +41,7 @@ class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
         imageUrl: state.imageUrl!,
       );
       await Future.delayed(Duration(milliseconds: 500));
-      state = WriteState(false, null);
+      state = WriteState(false, state.imageUrl);
       return result;
     } else {
       final result = await postRepository.update(
@@ -53,7 +52,7 @@ class WriteViewModel extends AutoDisposeFamilyNotifier<WriteState, Post?> {
         imageUrl: state.imageUrl!,
       );
       await Future.delayed(Duration(milliseconds: 500));
-      state = WriteState(false, null);
+      state = WriteState(false, state.imageUrl);
       return result;
     }
   }
