@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_blog_app/ui/detail/detail_page.dart';
+import 'package:flutter_firebase_blog_app/ui/home/home_view_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,15 +36,20 @@ class HomePage extends StatelessWidget {
           children: [
             const Text('최근글', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
-            Expanded(
-              child: ListView.separated(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return item();
-                },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                final posts = ref.watch(homeViewModelProvider);
+                return Expanded(
+                  child: ListView.separated(
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      return item();
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                  ),
+                );
+              },
             ),
           ],
         ),
