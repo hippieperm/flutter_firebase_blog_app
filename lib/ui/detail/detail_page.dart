@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_blog_app/data/model/post.dart';
+import 'package:flutter_firebase_blog_app/ui/detail/detail_view_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+class DetailPage extends ConsumerWidget {
+  final Post post;
+
+  const DetailPage({
+    super.key,
+    required this.post,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailViewModelProvider(post));
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -32,7 +42,7 @@ class DetailPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 500),
         children: [
           Image.network(
-            'https://picsum.photos/200/300',
+            state.imageUrl,
             fit: BoxFit.cover,
           ),
           const SizedBox(height: 20),
@@ -41,22 +51,24 @@ class DetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '아이 런드',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                const SizedBox(height: 14),
-                const Text(
-                  '이인혁',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const Text(
-                  '2024.8.8 20:30',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w200),
+                Text(
+                  state.title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 const SizedBox(height: 14),
                 Text(
-                  '플러터의 그리드 뷰를 배웠습니다' * 10,
+                  state.writer,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                Text(
+                  state.createdAt.toIso8601String(),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w200),
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  state.content,
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
