@@ -105,7 +105,8 @@ class PostRepository {
 
   Stream<List<Post>> postListStream() {
     final firestore = FirebaseFirestore.instance;
-    final collectionRef = firestore.collection('posts');
+    final collectionRef =
+        firestore.collection('posts').orderBy('createdAt', descending: true);
     final stream = collectionRef.snapshots();
 
     final newStream = stream.map((event) {
